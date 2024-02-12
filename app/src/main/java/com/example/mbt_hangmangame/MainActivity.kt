@@ -1,5 +1,6 @@
 package com.example.mbt_hangmangame
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var newGameButton: Button
 
     private var currWord: String = ""
+    private var numGuesses = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,15 +26,39 @@ class MainActivity : AppCompatActivity() {
         currWord = resources.getStringArray(R.array.wordBank).random()
         newGameButton = findViewById(R.id.newGameButton)
 
-        newGame()
-
         newGameButton.setOnClickListener(){
+            newGame()
+        }
+
+        if (savedInstanceState != null) {
+            // Restore the state of the game
+            currWord = savedInstanceState.getString("currWord", "")
+            numGuesses = savedInstanceState.getInt("numGuesses", 0)
+        } else {
+            // If no saved instance state, start a new game
             newGame()
         }
     }
     private fun newGame() {
         hangmanProgress.setImageResource(R.drawable.state0)
         currWord = resources.getStringArray(R.array.wordBank).random()
+        guessingWord.text = currWord
+        numGuesses = 0
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("currWord", currWord)
+        outState.putInt("numGuesses", numGuesses)
+    }
+
+    @SuppressLint("DiscouragedApi")
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        currWord = savedInstanceState.getString("currWord", "")
+        numGuesses = savedInstanceState.getInt("numGuesses", 0)
+        val currentState = "state$numGuesses"
+        hangmanProgress.setImageResource(resources.getIdentifier(currentState, "drawable", packageName))
         guessingWord.text = currWord
     }
 }
