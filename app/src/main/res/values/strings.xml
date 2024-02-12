@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">MBT-HangmanGame</string>
+    <string name="newGame">New Game</string>
+
+    <string-array name="wordBank">
+        <item>apple</item>
+        <item>banana</item>
+        <item>container</item>
+        <item>design</item>
+        <item>elephant</item>
+        <item>fancy</item>
+        <item>generate</item>
+        <item>higher</item>
+    </string-array>
+
 </resources>
