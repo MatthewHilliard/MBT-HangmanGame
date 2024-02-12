@@ -24,8 +24,7 @@
         app:layout_constraintStart_toEndOf="@+id/keyboard"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="#000000"
-        app:strokeWidth="1dp"
-        app:onClick="newGame"/>
+        app:strokeWidth="1dp" />
 
     <ImageView
         android:id="@+id/hangmanPicture"
