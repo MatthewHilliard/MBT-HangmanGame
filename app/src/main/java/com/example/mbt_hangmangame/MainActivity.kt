@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private var currWord: String = ""
     private var numGuesses = 0
+    private var curState = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,14 @@ class MainActivity : AppCompatActivity() {
         currWord = resources.getStringArray(R.array.wordBank).random()
         guessingWord.text = currWord
         numGuesses = 0
+    }
+
+    @SuppressLint("DiscouragedApi")
+    private fun wrongLetter() {
+        numGuesses += 1
+        curState = "state$numGuesses"
+        val resourceId = resources.getIdentifier(curState, "drawable", packageName)
+        hangmanProgress.setImageResource(resourceId)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
