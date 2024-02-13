@@ -121,4 +121,14 @@ class MainActivity : AppCompatActivity() {
         guessingWord.text = currentText.toString()
     }
 
+    private fun vowelHint() {
+        wrongLetter()
+        val vowels = setOf('A', 'E', 'I', 'O', 'U')
+        for ((index, char) in currWord.withIndex()) {
+            if (char in vowels) {
+                updateLetter(index*2, char)
+            }
+        }
+    }
+
 }
