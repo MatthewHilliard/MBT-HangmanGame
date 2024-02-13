@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var hangmanProgress: ImageView
@@ -16,7 +17,6 @@ class MainActivity : AppCompatActivity() {
 
     private var currWord: String = ""
     private var numGuesses = 0
-    private var curState = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,13 +47,37 @@ class MainActivity : AppCompatActivity() {
         guessingWord.text = currWord
         numGuesses = 0
     }
+    private fun youLost(view: View) {
+        val snackbar = Snackbar.make(view,
+            "You lost :( Click to start a new game",
+            Snackbar.LENGTH_LONG
+        )
+        snackbar.setAction("New Game") {
+            newGame()
+        }
+        snackbar.show()
+        //should disable all buttons so no more guesses are able to be made
+    }
+//    private fun youWin(view: View) {
+//        val snackbar = Snackbar.make(view,
+//            "You Won! Click to start a new game :)",
+//            Snackbar.LENGTH_LONG
+//        )
+//        snackbar.setAction("New Game") {
+//            newGame()
+//        }
+//        snackbar.show()
+//    }
 
     @SuppressLint("DiscouragedApi")
     private fun wrongLetter() {
         numGuesses += 1
-        curState = "state$numGuesses"
+        val curState = "state$numGuesses"
         val resourceId = resources.getIdentifier(curState, "drawable", packageName)
         hangmanProgress.setImageResource(resourceId)
+        if(numGuesses > 6) {
+            youLost(findViewById(android.R.id.content))
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
