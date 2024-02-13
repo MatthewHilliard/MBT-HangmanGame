@@ -1,6 +1,7 @@
 package com.example.mbt_hangmangame
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private var currWord: String = ""
     private var numGuesses = 0
     private var curState = ""
+    private var guessedLetters = mutableSetOf<Char>()
 
     companion object {
         const val GUESSING_WORD_KEY = "GUESSING_WORD_KEY"
@@ -85,8 +87,14 @@ class MainActivity : AppCompatActivity() {
         guessingWord.text = stringBuilder.toString()
     }
 
+    private fun resetButtons() {
+    }
+
     fun letterClick(view: View) {
         if (view is Button) {
+            val button = view as Button
+            button.setBackgroundColor(Color.parseColor("#c6cfc8"))
+            button.isEnabled = false
             val guess = view.text.toString().uppercase().first()
             if (currWord.contains(guess, ignoreCase = true)) {
                 currWord.forEachIndexed { index, char ->
