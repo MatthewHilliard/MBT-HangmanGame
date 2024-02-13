@@ -98,7 +98,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bButton"
@@ -110,7 +111,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cButton"
@@ -122,7 +124,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/dButton"
@@ -134,7 +137,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/eButton"
@@ -146,7 +150,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/fButton"
@@ -158,7 +163,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
         </LinearLayout>
 
         <LinearLayout
@@ -175,7 +181,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/hButton"
@@ -187,7 +194,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/iButton"
@@ -199,7 +207,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/jButton"
@@ -211,7 +220,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/kButton"
@@ -223,7 +233,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="60dp"
@@ -234,7 +245,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
         </LinearLayout>
 
         <LinearLayout
@@ -251,7 +263,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/nButton"
@@ -263,7 +276,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/oButton"
@@ -275,7 +289,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/pButton"
@@ -287,7 +302,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/qButton"
@@ -299,7 +315,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/rButton"
@@ -311,7 +328,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
         </LinearLayout>
 
         <LinearLayout
@@ -328,7 +346,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/tButton"
@@ -340,7 +359,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/uButton"
@@ -352,7 +372,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/vButton"
@@ -364,7 +385,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/wButton"
@@ -377,7 +399,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/xButton"
@@ -389,7 +412,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
         </LinearLayout>
 
         <LinearLayout
@@ -407,7 +431,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/zButton"
@@ -419,7 +444,8 @@
                 android:textSize="18dp"
                 app:cornerRadius="5dp"
                 app:strokeColor="#000000"
-                app:strokeWidth="1dp" />
+                app:strokeWidth="1dp"
+                android:onClick="letterClick"/>
         </LinearLayout>
     </LinearLayout>
 

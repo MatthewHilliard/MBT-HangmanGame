@@ -60,5 +60,35 @@ class MainActivity : AppCompatActivity() {
         val currentState = "state$numGuesses"
         hangmanProgress.setImageResource(resources.getIdentifier(currentState, "drawable", packageName))
         guessingWord.text = currWord
+        //guessingWord.text = currWord
+        underscoreWord(currWord, guessingWord)
     }
+
+    private fun underscoreWord(word: String, textView: TextView) {
+        val stringBuilder = StringBuilder()
+        for (char in word) {
+            stringBuilder.append("_ ")
+        }
+        textView.text = stringBuilder.toString()
+    }
+
+    fun letterClick(view: View) {
+        if (view is Button) {
+            val guess = view.text.toString().uppercase().first()
+            if (currWord.contains(guess, ignoreCase = true)) {
+                currWord.forEachIndexed { index, char ->
+                    if (char.equals(guess, ignoreCase = true)) {
+                        updateLetter(guessingWord, index, guess)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateLetter(textView: TextView, index: Int, newChar: Char) {
+        val currentText = StringBuilder(textView.text.toString())
+        currentText.setCharAt(index*2, newChar)
+        textView.text = currentText.toString()
+    }
+
 }
