@@ -109,11 +109,4 @@ class MainActivity : AppCompatActivity() {
         textView.text = currentText.toString()
     }
 
-    @SuppressLint("DiscouragedApi")
-    private fun wrongLetter() {
-        numGuesses += 1
-        val curState = "state$numGuesses"
-        val resourceId = resources.getIdentifier(curState, "drawable", packageName)
-        hangmanProgress.setImageResource(resourceId)
-    }
 }
