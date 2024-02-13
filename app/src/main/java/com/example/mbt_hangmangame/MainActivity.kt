@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private var currWord: String = ""
     private var numGuesses = 0
     private var curState = ""
-    private var guessedLetters = mutableSetOf<Char>()
+    private val guessedLetters = mutableSetOf<Button>()
 
     companion object {
         const val GUESSING_WORD_KEY = "GUESSING_WORD_KEY"
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
         currWord = resources.getStringArray(R.array.wordBank).random()
         numGuesses = 0
         underscoreWord()
+        resetButtons()
     }
 
     @SuppressLint("DiscouragedApi")
@@ -88,11 +89,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resetButtons() {
+        guessedLetters.forEach { button ->
+            button.isEnabled = true
+            button.setBackgroundColor(Color.parseColor("#42474f"))
+        }
+        guessedLetters.clear()
     }
 
     fun letterClick(view: View) {
         if (view is Button) {
             val button = view as Button
+            guessedLetters.add(button)
             button.setBackgroundColor(Color.parseColor("#c6cfc8"))
             button.isEnabled = false
             val guess = view.text.toString().uppercase().first()
