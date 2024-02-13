@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         currWord = resources.getStringArray(R.array.wordBank).random()
         newGameButton = findViewById(R.id.newGameButton)
 
-        newGameButton.setOnClickListener(){
+        newGameButton.setOnClickListener() {
             newGame()
         }
 
@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
             newGame()
         }
     }
+
     private fun newGame() {
         hangmanProgress.setImageResource(R.drawable.state0)
         currWord = resources.getStringArray(R.array.wordBank).random()
@@ -67,7 +68,13 @@ class MainActivity : AppCompatActivity() {
         currWord = savedInstanceState.getString("currWord", "")
         numGuesses = savedInstanceState.getInt("numGuesses", 0)
         val currentState = "state$numGuesses"
-        hangmanProgress.setImageResource(resources.getIdentifier(currentState, "drawable", packageName))
+        hangmanProgress.setImageResource(
+            resources.getIdentifier(
+                currentState,
+                "drawable",
+                packageName
+            )
+        )
         guessingWord.text = currWord
         //guessingWord.text = currWord
         underscoreWord(currWord, guessingWord)
@@ -90,14 +97,23 @@ class MainActivity : AppCompatActivity() {
                         updateLetter(guessingWord, index, guess)
                     }
                 }
+            } else {
+                wrongLetter()
             }
         }
     }
 
     private fun updateLetter(textView: TextView, index: Int, newChar: Char) {
         val currentText = StringBuilder(textView.text.toString())
-        currentText.setCharAt(index*2, newChar)
+        currentText.setCharAt(index * 2, newChar)
         textView.text = currentText.toString()
     }
 
+    @SuppressLint("DiscouragedApi")
+    private fun wrongLetter() {
+        numGuesses += 1
+        val curState = "state$numGuesses"
+        val resourceId = resources.getIdentifier(curState, "drawable", packageName)
+        hangmanProgress.setImageResource(resourceId)
+    }
 }
