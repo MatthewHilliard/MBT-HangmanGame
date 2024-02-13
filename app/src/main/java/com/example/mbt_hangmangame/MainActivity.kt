@@ -18,6 +18,10 @@ class MainActivity : AppCompatActivity() {
     private var numGuesses = 0
     private var curState = ""
 
+    companion object {
+        const val GUESSING_WORD_KEY = "GUESSING_WORD_KEY"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         currWord = resources.getStringArray(R.array.wordBank).random()
         newGameButton = findViewById(R.id.newGameButton)
 
-        newGameButton.setOnClickListener() {
+        newGameButton.setOnClickListener(){
             newGame()
         }
 
@@ -44,8 +48,8 @@ class MainActivity : AppCompatActivity() {
     private fun newGame() {
         hangmanProgress.setImageResource(R.drawable.state0)
         currWord = resources.getStringArray(R.array.wordBank).random()
-        guessingWord.text = currWord
         numGuesses = 0
+        underscoreWord()
     }
 
     @SuppressLint("DiscouragedApi")
@@ -60,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putString("currWord", currWord)
         outState.putInt("numGuesses", numGuesses)
+        outState.putString("GUESSING_WORD_KEY", guessingWord.text.toString())
     }
 
     @SuppressLint("DiscouragedApi")
@@ -67,25 +72,17 @@ class MainActivity : AppCompatActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         currWord = savedInstanceState.getString("currWord", "")
         numGuesses = savedInstanceState.getInt("numGuesses", 0)
+        guessingWord.text = savedInstanceState.getString(GUESSING_WORD_KEY, "")
         val currentState = "state$numGuesses"
-        hangmanProgress.setImageResource(
-            resources.getIdentifier(
-                currentState,
-                "drawable",
-                packageName
-            )
-        )
-        guessingWord.text = currWord
-        //guessingWord.text = currWord
-        underscoreWord(currWord, guessingWord)
+        hangmanProgress.setImageResource(resources.getIdentifier(currentState, "drawable", packageName))
     }
 
-    private fun underscoreWord(word: String, textView: TextView) {
+    private fun underscoreWord() {
         val stringBuilder = StringBuilder()
-        for (char in word) {
+        for (char in currWord) {
             stringBuilder.append("_ ")
         }
-        textView.text = stringBuilder.toString()
+        guessingWord.text = stringBuilder.toString()
     }
 
     fun letterClick(view: View) {
@@ -94,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             if (currWord.contains(guess, ignoreCase = true)) {
                 currWord.forEachIndexed { index, char ->
                     if (char.equals(guess, ignoreCase = true)) {
-                        updateLetter(guessingWord, index, guess)
+                        updateLetter(index, guess)
                     }
                 }
             } else {
@@ -103,10 +100,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateLetter(textView: TextView, index: Int, newChar: Char) {
-        val currentText = StringBuilder(textView.text.toString())
-        currentText.setCharAt(index * 2, newChar)
-        textView.text = currentText.toString()
+    private fun updateLetter(index: Int, newChar: Char) {
+        val currentText = StringBuilder(guessingWord.text.toString())
+        currentText.setCharAt(index*2, newChar)
+        guessingWord.text = currentText.toString()
     }
 
 }
