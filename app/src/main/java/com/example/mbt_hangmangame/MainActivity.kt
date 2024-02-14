@@ -19,12 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     private var currWord: String = ""
     private var numGuesses = 0
-    private var curState = ""
-    private val guessedLetters = mutableSetOf<Button>()
-
-    companion object {
-        const val GUESSING_WORD_KEY = "GUESSING_WORD_KEY"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         currWord = resources.getStringArray(R.array.wordBank).random()
         newGameButton = findViewById(R.id.newGameButton)
 
-        newGameButton.setOnClickListener(){
+        newGameButton.setOnClickListener() {
             newGame()
         }
 
@@ -52,9 +46,8 @@ class MainActivity : AppCompatActivity() {
     private fun newGame() {
         hangmanProgress.setImageResource(R.drawable.state0)
         currWord = resources.getStringArray(R.array.wordBank).random()
+        guessingWord.text = currWord
         numGuesses = 0
-        underscoreWord()
-        resetButtons()
     }
     private fun youLost(view: View) {
         val keyboardGroup: LinearLayout = findViewById(R.id.keyboard)
@@ -104,7 +97,6 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
         outState.putString("currWord", currWord)
         outState.putInt("numGuesses", numGuesses)
-        outState.putString("GUESSING_WORD_KEY", guessingWord.text.toString())
     }
 
     @SuppressLint("DiscouragedApi")
@@ -112,38 +104,34 @@ class MainActivity : AppCompatActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         currWord = savedInstanceState.getString("currWord", "")
         numGuesses = savedInstanceState.getInt("numGuesses", 0)
-        guessingWord.text = savedInstanceState.getString(GUESSING_WORD_KEY, "")
         val currentState = "state$numGuesses"
-        hangmanProgress.setImageResource(resources.getIdentifier(currentState, "drawable", packageName))
+        hangmanProgress.setImageResource(
+            resources.getIdentifier(
+                currentState,
+                "drawable",
+                packageName
+            )
+        )
+        guessingWord.text = currWord
+        //guessingWord.text = currWord
+        underscoreWord(currWord, guessingWord)
     }
 
-    private fun underscoreWord() {
+    private fun underscoreWord(word: String, textView: TextView) {
         val stringBuilder = StringBuilder()
-        for (char in currWord) {
+        for (char in word) {
             stringBuilder.append("_ ")
         }
-        guessingWord.text = stringBuilder.toString()
-    }
-
-    private fun resetButtons() {
-        guessedLetters.forEach { button ->
-            button.isEnabled = true
-            button.setBackgroundColor(Color.parseColor("#42474f"))
-        }
-        guessedLetters.clear()
+        textView.text = stringBuilder.toString()
     }
 
     fun letterClick(view: View) {
         if (view is Button) {
-            val button = view as Button
-            guessedLetters.add(button)
-            button.setBackgroundColor(Color.parseColor("#c6cfc8"))
-            button.isEnabled = false
             val guess = view.text.toString().uppercase().first()
             if (currWord.contains(guess, ignoreCase = true)) {
                 currWord.forEachIndexed { index, char ->
                     if (char.equals(guess, ignoreCase = true)) {
-                        updateLetter(index, guess)
+                        updateLetter(guessingWord, index, guess)
                     }
                 }
             } else {
@@ -152,20 +140,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateLetter(index: Int, newChar: Char) {
-        val currentText = StringBuilder(guessingWord.text.toString())
-        currentText.setCharAt(index*2, newChar)
-        guessingWord.text = currentText.toString()
-    }
-
-    private fun vowelHint() {
-        wrongLetter()
-        val vowels = setOf('A', 'E', 'I', 'O', 'U')
-        for ((index, char) in currWord.withIndex()) {
-            if (char in vowels) {
-                updateLetter(index*2, char)
-            }
-        }
+    private fun updateLetter(textView: TextView, index: Int, newChar: Char) {
+        val currentText = StringBuilder(textView.text.toString())
+        currentText.setCharAt(index * 2, newChar)
+        textView.text = currentText.toString()
     }
 
 }
