@@ -4,12 +4,13 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -56,18 +57,28 @@ class MainActivity : AppCompatActivity() {
         underscoreWord()
         resetButtons()
     }
-    private fun youLost(view: View) {
+    private fun disableAll(view: View) {
+        val newGame: MaterialButton = findViewById(R.id.newGameButton)
+        newGame.isEnabled = false
         val keyboardGroup: LinearLayout = findViewById(R.id.keyboard)
 
-            for (i in 0 until keyboardGroup.childCount) {
-                val childView: View = keyboardGroup.getChildAt(i)
+        for (i in 0 until keyboardGroup.childCount) {
+            val child: View? = keyboardGroup.getChildAt(i)
 
-                if (childView is Button) {
-                    childView.setBackgroundColor(Color.parseColor("#c6cfc8"))
-                    childView.isEnabled = false
+            if (child is ViewGroup) {
+                for (j in 0 until child.childCount) {
+                    val innerChild: View? = child.getChildAt(j)
+
+                    if (innerChild is Button) {
+                        innerChild.setBackgroundColor(Color.parseColor("#c6cfc8"))
+                        innerChild.isEnabled = false
+                    }
                 }
             }
-
+        }
+    }
+    private fun youLost(view: View) {
+        disableAll(view)
         val snackbar = Snackbar.make(view,
             "You lost :( Click to start a new game",
             Snackbar.LENGTH_INDEFINITE
