@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private var numGuesses = 0
     private var curState = ""
     private val guessedLetters = mutableSetOf<Button>()
+    private val allLetters = mutableSetOf<Button>()
 
     companion object {
         const val GUESSING_WORD_KEY = "GUESSING_WORD_KEY"
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             // If no saved instance state, start a new game
             newGame()
         }
+        getAllButtons()
     }
 
     private fun newGame() {
@@ -57,9 +59,8 @@ class MainActivity : AppCompatActivity() {
         underscoreWord()
         resetButtons()
     }
-    private fun disableAll(view: View) {
-        val newGame: MaterialButton = findViewById(R.id.newGameButton)
-        newGame.isEnabled = false
+
+    private fun getAllButtons() {
         val keyboardGroup: LinearLayout = findViewById(R.id.keyboard)
 
         for (i in 0 until keyboardGroup.childCount) {
@@ -70,11 +71,20 @@ class MainActivity : AppCompatActivity() {
                     val innerChild: View? = child.getChildAt(j)
 
                     if (innerChild is Button) {
-                        innerChild.setBackgroundColor(Color.parseColor("#c6cfc8"))
-                        innerChild.isEnabled = false
+                        allLetters.add(innerChild)
                     }
                 }
             }
+        }
+    }
+
+    private fun disableAll(view: View) {
+        val newGame: MaterialButton = findViewById(R.id.newGameButton)
+        newGame.isEnabled = false
+        val keyboardGroup: LinearLayout = findViewById(R.id.keyboard)
+        allLetters.forEach { button ->
+            button.isEnabled = false
+            button.setBackgroundColor(Color.parseColor("#c6cfc8"))
         }
     }
     private fun youLost(view: View) {
@@ -128,7 +138,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resetButtons() {
-        guessedLetters.forEach { button ->
+        allLetters.forEach { button ->
             button.isEnabled = true
             button.setBackgroundColor(Color.parseColor("#42474f"))
         }
