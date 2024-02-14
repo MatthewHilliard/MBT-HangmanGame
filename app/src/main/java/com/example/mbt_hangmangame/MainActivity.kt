@@ -70,24 +70,15 @@ class MainActivity : AppCompatActivity() {
 
         val snackbar = Snackbar.make(view,
             "You lost :( Click to start a new game",
-            Snackbar.LENGTH_LONG
+            Snackbar.LENGTH_INDEFINITE
         )
         snackbar.setAction("New Game") {
             newGame()
+            snackbar.dismiss()
         }
         snackbar.show()
         //should disable all buttons so no more guesses are able to be made
     }
-//    private fun youWin(view: View) {
-//        val snackbar = Snackbar.make(view,
-//            "You Won! Click to start a new game :)",
-//            Snackbar.LENGTH_LONG
-//        )
-//        snackbar.setAction("New Game") {
-//            newGame()
-//        }
-//        snackbar.show()
-//    }
 
     @SuppressLint("DiscouragedApi")
     private fun wrongLetter() {
@@ -149,6 +140,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 wrongLetter()
             }
+            checkWin()
         }
     }
 
@@ -165,6 +157,19 @@ class MainActivity : AppCompatActivity() {
             if (char in vowels) {
                 updateLetter(index*2, char)
             }
+        }
+        checkWin()
+    }
+
+    private fun checkWin(){
+        val trimmedWord = guessingWord.text.toString().replace(" ", "")
+        if(trimmedWord.equals(currWord, ignoreCase = true)){
+            val snackbar = Snackbar.make(findViewById(android.R.id.content), "You Won! Click to start a new game :)", Snackbar.LENGTH_INDEFINITE)
+            snackbar.setAction("New Game") {
+                newGame()
+                snackbar.dismiss()
+            }
+            snackbar.show()
         }
     }
 
