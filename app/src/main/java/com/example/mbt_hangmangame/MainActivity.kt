@@ -1,12 +1,14 @@
 package com.example.mbt_hangmangame
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 
@@ -48,6 +50,17 @@ class MainActivity : AppCompatActivity() {
         numGuesses = 0
     }
     private fun youLost(view: View) {
+        val keyboardGroup: LinearLayout = findViewById(R.id.keyboard)
+
+            for (i in 0 until keyboardGroup.childCount) {
+                val childView: View = keyboardGroup.getChildAt(i)
+
+                if (childView is Button) {
+                    childView.setBackgroundColor(Color.parseColor("#c6cfc8"))
+                    childView.isEnabled = false
+                }
+            }
+
         val snackbar = Snackbar.make(view,
             "You lost :( Click to start a new game",
             Snackbar.LENGTH_LONG
