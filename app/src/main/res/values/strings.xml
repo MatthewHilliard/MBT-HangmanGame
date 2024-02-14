@@ -2,15 +2,60 @@
     <string name="app_name">MBT-HangmanGame</string>
     <string name="newGame">New Game</string>
 
-    <string-array name="wordBank">
+    <array name="wordBank">
+        <item>@array/wordOne</item>
+        <item>@array/wordTwo</item>
+        <item>@array/wordThree</item>
+        <item>@array/wordFour</item>
+        <item>@array/wordFive</item>
+        <item>@array/wordSix</item>
+        <item>@array/wordSeven</item>
+        <item>@array/wordEight</item>
+    </array>
+
+    <string-array name="wordOne">
         <item>apple</item>
-        <item>banana</item>
-        <item>container</item>
-        <item>design</item>
-        <item>elephant</item>
-        <item>fancy</item>
-        <item>generate</item>
-        <item>higher</item>
+        <item>fruit</item>
     </string-array>
 
+    <string-array name="wordTwo">
+        <item>banana</item>
+        <item>fruit</item>
+    </string-array>
+
+
+    <string-array name="wordThree">
+        <item>container</item>
+        <item>receptacle</item>
+    </string-array>
+
+
+    <string-array name="wordFour">
+        <item>drawing</item>
+        <item>picture</item>
+    </string-array>
+
+
+    <string-array name="wordFive">
+        <item>elephant</item>
+        <item>animal</item>
+    </string-array>
+
+
+    <string-array name="wordSix">
+        <item>feather</item>
+        <item>bird</item>
+    </string-array>
+
+
+    <string-array name="wordSeven">
+        <item>generate</item>
+        <item>create</item>
+    </string-array>
+
+
+    <string-array name="wordEight">
+        <item>higher</item>
+        <item>up</item>
+    </string-array>
 </resources>

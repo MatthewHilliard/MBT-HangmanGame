@@ -17,9 +17,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var hangmanProgress: ImageView
     private lateinit var guessingWord: TextView
     private lateinit var newGameButton: Button
+    private lateinit var currArray: Array<String>
 
     private var currWord: String = ""
+    private var currHint: String = ""
     private var numGuesses = 0
+    private var hintState = 1
     private var curState = ""
     private val guessedLetters = mutableSetOf<Button>()
     private val allLetters = mutableSetOf<Button>()
@@ -34,7 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         hangmanProgress = findViewById(R.id.hangmanPicture)
         guessingWord = findViewById(R.id.guessingWord)
-        currWord = resources.getStringArray(R.array.wordBank).random()
+        currArray = arrayOf(resources.getStringArray(R.array.wordBank).random())
+        currWord = currArray[0]
+        currHint = currArray[1]
         newGameButton = findViewById(R.id.newGameButton)
 
         newGameButton.setOnClickListener(){
@@ -171,17 +176,6 @@ class MainActivity : AppCompatActivity() {
         guessingWord.text = currentText.toString()
     }
 
-    private fun vowelHint() {
-        wrongLetter()
-        val vowels = setOf('A', 'E', 'I', 'O', 'U')
-        for ((index, char) in currWord.withIndex()) {
-            if (char in vowels) {
-                updateLetter(index*2, char)
-            }
-        }
-        checkWin()
-    }
-
     private fun checkWin(){
         val trimmedWord = guessingWord.text.toString().replace(" ", "")
         if(trimmedWord.equals(currWord, ignoreCase = true)){
@@ -192,6 +186,21 @@ class MainActivity : AppCompatActivity() {
             }
             snackbar.show()
         }
+    }
+
+    private fun hintClick() {
+
+    }
+
+    private fun vowelHint() {
+        wrongLetter()
+        val vowels = setOf('A', 'E', 'I', 'O', 'U')
+        for ((index, char) in currWord.withIndex()) {
+            if (char in vowels) {
+                updateLetter(index*2, char)
+            }
+        }
+        checkWin()
     }
 
 }
