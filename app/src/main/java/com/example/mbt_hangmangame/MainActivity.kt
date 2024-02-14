@@ -8,7 +8,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var hangmanProgress: ImageView
@@ -54,13 +56,48 @@ class MainActivity : AppCompatActivity() {
         underscoreWord()
         resetButtons()
     }
+    private fun youLost(view: View) {
+        val keyboardGroup: LinearLayout = findViewById(R.id.keyboard)
+
+            for (i in 0 until keyboardGroup.childCount) {
+                val childView: View = keyboardGroup.getChildAt(i)
+
+                if (childView is Button) {
+                    childView.setBackgroundColor(Color.parseColor("#c6cfc8"))
+                    childView.isEnabled = false
+                }
+            }
+
+        val snackbar = Snackbar.make(view,
+            "You lost :( Click to start a new game",
+            Snackbar.LENGTH_LONG
+        )
+        snackbar.setAction("New Game") {
+            newGame()
+        }
+        snackbar.show()
+        //should disable all buttons so no more guesses are able to be made
+    }
+//    private fun youWin(view: View) {
+//        val snackbar = Snackbar.make(view,
+//            "You Won! Click to start a new game :)",
+//            Snackbar.LENGTH_LONG
+//        )
+//        snackbar.setAction("New Game") {
+//            newGame()
+//        }
+//        snackbar.show()
+//    }
 
     @SuppressLint("DiscouragedApi")
     private fun wrongLetter() {
         numGuesses += 1
-        curState = "state$numGuesses"
+        val curState = "state$numGuesses"
         val resourceId = resources.getIdentifier(curState, "drawable", packageName)
         hangmanProgress.setImageResource(resourceId)
+        if(numGuesses > 6) {
+            youLost(findViewById(android.R.id.content))
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
