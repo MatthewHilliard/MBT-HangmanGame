@@ -69,6 +69,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guessingWord" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/hintButton"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="#42474f"
+        android:text="Hint"
+        android:textSize="26dp"
+        app:cornerRadius="5dp"
+        app:strokeColor="#000000"
+        app:strokeWidth="1dp"
+        android:onClick="hintClick"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/hintText"
+        android:layout_width="280dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="19dp"
+        android:text="Hint: "
+        android:textColor="@color/black"
+        android:textSize="40dp"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:id="@+id/keyboard"
         android:layout_width="413dp"

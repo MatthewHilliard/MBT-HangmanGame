@@ -19,14 +19,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var guessingWord: TextView
     private lateinit var newGameButton: Button
     private lateinit var currList: List<String>
+    private lateinit var hintText: TextView
+    private lateinit var hintButton: Button
 
     private var currPair: String = ""
     private var currWord: String = ""
     private var currHint: String = ""
     private var numGuesses = 0
-    private var hintState = 1
-    private var hintText: TextView? = null
-    private var curState = ""
+    private var hintState = 0
     private val guessedLetters = mutableSetOf<Button>()
     private val allLetters = mutableSetOf<Button>()
 
@@ -44,19 +44,19 @@ class MainActivity : AppCompatActivity() {
         currList = currPair.split(",")
         currWord = currList[0]
         currHint = currList[1]
-        hintState = 1
+        hintState = 0
         newGameButton = findViewById(R.id.newGameButton)
+        hintButton = findViewById(R.id.hintButton)
+        hintText = findViewById(R.id.hintText)
 
         newGameButton.setOnClickListener(){
             newGame()
         }
 
         if (savedInstanceState != null) {
-            // Restore the state of the game
             currWord = savedInstanceState.getString("currWord", "")
             numGuesses = savedInstanceState.getInt("numGuesses", 0)
         } else {
-            // If no saved instance state, start a new game
             newGame()
         }
         getAllButtons()
@@ -68,11 +68,9 @@ class MainActivity : AppCompatActivity() {
         currList = currPair.split(",")
         currWord = currList[0]
         currHint = currList[1]
-        hintState = 1
+        hintState = 0
         numGuesses = 0
-        if (hintText != null) {
-            hintText!!.text = "Hint:"
-        }
+        hintText.text = "Hint:"
         newGameButton.isEnabled = true
         underscoreWord()
         resetButtons()
@@ -135,6 +133,8 @@ class MainActivity : AppCompatActivity() {
         outState.putString("currWord", currWord)
         outState.putInt("numGuesses", numGuesses)
         outState.putString("GUESSING_WORD_KEY", guessingWord.text.toString())
+        outState.putString("currHint", currHint)
+        outState.putInt("hintState", hintState)
         allLetters.forEachIndexed { index, button ->
             outState.putBoolean("button$index", button.isEnabled)
         }
@@ -146,6 +146,17 @@ class MainActivity : AppCompatActivity() {
         currWord = savedInstanceState.getString("currWord", "")
         numGuesses = savedInstanceState.getInt("numGuesses", 0)
         guessingWord.text = savedInstanceState.getString(GUESSING_WORD_KEY, "")
+        currHint = savedInstanceState.getString("currHint", "")
+        hintState = savedInstanceState.getInt("hintState", 0)
+        if(hintState == 0){
+            hintText.text = "Hint:"
+        }
+        else if(hintState == 1 || hintState == 2){
+            hintText.text = currHint
+        }
+        else {
+            hintText.text = "vowel hint!"
+        }
         val currentState = "state$numGuesses"
         hangmanProgress.setImageResource(resources.getIdentifier(currentState, "drawable", packageName))
         allLetters.forEachIndexed { index, button ->
@@ -214,33 +225,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun hintClick(view: View) {
-        if (hintText == null) {
-            createHintText()
-        }
-
-        if (numGuesses == 6) {
+        if (numGuesses == 6 && hintState >= 1) {
             val snackbar = Snackbar.make(view,
                 "Hint not available",
                 Snackbar.LENGTH_LONG)
             snackbar.show()
         }
-        when (hintState) {
-            1 -> {
-                hintText?.append(currHint)
+        else{
+            if(hintState == 0){
+                hintText.append(currHint)
             }
-            2 -> {
+            else if(hintState == 1)
                 disableHalf()
-            }
-            3 -> {
+            else if(hintState == 2){
                 vowelHint()
             }
+            hintState += 1
         }
-        hintState += 1
-    }
-
-    private fun createHintText() {
-        hintText = findViewById(R.id.hintText)
-
     }
 
     private fun vowelHint() {
@@ -252,7 +253,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         checkWin()
-        hintText?.text = "vowel hint!"
+        hintText.text = "vowel hint!"
     }
 
     private fun disableHalf() {
