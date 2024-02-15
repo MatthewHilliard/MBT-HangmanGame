@@ -1,6 +1,7 @@
 package com.example.mbt_hangmangame
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,12 +18,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var hangmanProgress: ImageView
     private lateinit var guessingWord: TextView
     private lateinit var newGameButton: Button
-    private lateinit var currArray: Array<String>
+    private lateinit var currList: List<String>
 
+    private var currPair: String = ""
     private var currWord: String = ""
     private var currHint: String = ""
     private var numGuesses = 0
     private var hintState = 1
+    private var hintText: TextView? = null
     private var curState = ""
     private val guessedLetters = mutableSetOf<Button>()
     private val allLetters = mutableSetOf<Button>()
@@ -37,9 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         hangmanProgress = findViewById(R.id.hangmanPicture)
         guessingWord = findViewById(R.id.guessingWord)
-        currArray = arrayOf(resources.getStringArray(R.array.wordBank).random())
-        currWord = currArray[0]
-        currHint = currArray[1]
+        currPair = resources.getStringArray(R.array.wordBank).random()
+        currList = currPair.split(",")
+        currWord = currList[0]
+        currHint = currList[1]
+        hintState = 1
         newGameButton = findViewById(R.id.newGameButton)
 
         newGameButton.setOnClickListener(){
@@ -59,7 +64,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun newGame() {
         hangmanProgress.setImageResource(R.drawable.state0)
-        currWord = resources.getStringArray(R.array.wordBank).random()
+        currPair = resources.getStringArray(R.array.wordBank).random()
+        currList = currPair.split(",")
+        currWord = currList[0]
+        currHint = currList[1]
+        hintState = 1
         numGuesses = 0
         underscoreWord()
         resetButtons()
@@ -188,7 +197,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun hintClick() {
+    fun hintClick(view: View) {
+        if (hintText == null) {
+            createHintText()
+        }
+
+        if (hintState == 1) {
+            hintText?.append(currHint)
+        }
+
+        if (hintState == 2) {
+            vowelHint()
+        }
+
+        hintState += 1
+    }
+
+    private fun createHintText() {
+        hintText = findViewById(R.id.hintText)
 
     }
 
