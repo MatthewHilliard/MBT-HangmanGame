@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     private var currWord: String = ""
     private var numGuesses = 0
-    private var curState = ""
     private val guessedLetters = mutableSetOf<Button>()
     private val allLetters = mutableSetOf<Button>()
 
@@ -118,6 +117,9 @@ class MainActivity : AppCompatActivity() {
         outState.putString("currWord", currWord)
         outState.putInt("numGuesses", numGuesses)
         outState.putString("GUESSING_WORD_KEY", guessingWord.text.toString())
+        allLetters.forEachIndexed { index, button ->
+            outState.putBoolean("button$index", button.isEnabled)
+        }
     }
 
     @SuppressLint("DiscouragedApi")
@@ -128,6 +130,14 @@ class MainActivity : AppCompatActivity() {
         guessingWord.text = savedInstanceState.getString(GUESSING_WORD_KEY, "")
         val currentState = "state$numGuesses"
         hangmanProgress.setImageResource(resources.getIdentifier(currentState, "drawable", packageName))
+        allLetters.forEachIndexed { index, button ->
+            button.isEnabled = savedInstanceState.getBoolean("button$index")
+            if (button.isEnabled) {
+                button.setBackgroundColor(Color.parseColor("#42474f"))
+            } else {
+                button.setBackgroundColor(Color.parseColor("#c6cfc8"))
+            }
+        }
     }
 
     private fun underscoreWord() {
