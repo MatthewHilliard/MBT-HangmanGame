@@ -205,11 +205,20 @@ class MainActivity : AppCompatActivity() {
             createHintText()
         }
 
+        if (numGuesses == 6) {
+            val snackbar = Snackbar.make(view,
+                "Hint not available",
+                Snackbar.LENGTH_LONG)
+            snackbar.show()
+        }
         when (hintState) {
             1 -> {
                 hintText?.append(currHint)
             }
             2 -> {
+                disableHalf()
+            }
+            3 -> {
                 vowelHint()
             }
         }
@@ -233,4 +242,27 @@ class MainActivity : AppCompatActivity() {
         hintText?.text = "vowel hint!"
     }
 
+    private fun disableHalf() {
+        val lettersNotInWord = notInWord()
+        val lettersToDisable = randomSet(lettersNotInWord)
+
+        allLetters.forEach { button ->
+            val char = button.text.toString().uppercase().first()
+            if (char in lettersToDisable) {
+                button.isEnabled = false
+                button.setBackgroundColor(Color.parseColor("#c6cfc8"))
+            }
+        }
+    }
+
+    private fun notInWord(): Set<Char> {
+        val wordLetters = currWord.uppercase().toSet()
+        return ('A'..'Z').toSet() - wordLetters
+    }
+
+    private fun randomSet(letters: Set<Char>): Set<Char> {
+        val list = letters.toList()
+        val halfSize = list.size / 2
+        return list.shuffled().take(halfSize).toSet()
+    }
 }
