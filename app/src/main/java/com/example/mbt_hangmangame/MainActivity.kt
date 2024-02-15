@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         hangmanProgress.setImageResource(R.drawable.state0)
         currWord = resources.getStringArray(R.array.wordBank).random()
         numGuesses = 0
+        newGameButton.isEnabled = true
         underscoreWord()
         resetButtons()
     }
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun disableAll(view: View) {
+    private fun disableAll() {
         val newGame: MaterialButton = findViewById(R.id.newGameButton)
         newGame.isEnabled = false
         val keyboardGroup: LinearLayout = findViewById(R.id.keyboard)
@@ -88,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun youLost(view: View) {
-        disableAll(view)
+        disableAll()
         val snackbar = Snackbar.make(view,
             "You lost :( Click to start a new game",
             Snackbar.LENGTH_INDEFINITE
@@ -185,6 +186,7 @@ class MainActivity : AppCompatActivity() {
     private fun checkWin(){
         val trimmedWord = guessingWord.text.toString().replace(" ", "")
         if(trimmedWord.equals(currWord, ignoreCase = true)){
+            disableAll()
             val snackbar = Snackbar.make(findViewById(android.R.id.content), "You Won! Click to start a new game :)", Snackbar.LENGTH_INDEFINITE)
             snackbar.setAction("New Game") {
                 newGame()
