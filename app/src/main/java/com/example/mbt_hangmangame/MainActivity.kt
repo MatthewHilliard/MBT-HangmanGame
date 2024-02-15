@@ -70,6 +70,9 @@ class MainActivity : AppCompatActivity() {
         currHint = currList[1]
         hintState = 1
         numGuesses = 0
+        if (hintText != null) {
+            hintText!!.text = "Hint:"
+        }
         underscoreWord()
         resetButtons()
     }
@@ -202,14 +205,14 @@ class MainActivity : AppCompatActivity() {
             createHintText()
         }
 
-        if (hintState == 1) {
-            hintText?.append(currHint)
+        when (hintState) {
+            1 -> {
+                hintText?.append(currHint)
+            }
+            2 -> {
+                vowelHint()
+            }
         }
-
-        if (hintState == 2) {
-            vowelHint()
-        }
-
         hintState += 1
     }
 
@@ -219,14 +222,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun vowelHint() {
-        wrongLetter()
+        wrongLetter() //costs the player a turn
         val vowels = setOf('A', 'E', 'I', 'O', 'U')
         for ((index, char) in currWord.withIndex()) {
-            if (char in vowels) {
-                updateLetter(index*2, char)
+            if (char.uppercaseChar() in vowels && guessingWord.text.toString()[index*2] == '_') {
+                updateLetter(index, char.uppercaseChar())
             }
         }
         checkWin()
+        hintText?.text = "vowel hint!"
     }
 
 }
