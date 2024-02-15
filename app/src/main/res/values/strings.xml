@@ -3,14 +3,14 @@
     <string name="newGame">New Game</string>
 
     <string-array name="wordBank">
-        <item>apple</item>
-        <item>banana</item>
-        <item>container</item>
-        <item>design</item>
-        <item>elephant</item>
-        <item>fancy</item>
-        <item>generate</item>
-        <item>higher</item>
+        <item>apple,fruit</item>
+        <item>banana,fruit</item>
+        <item>container,receptacle</item>
+        <item>drawing,picture</item>
+        <item>elephant,animal</item>
+        <item>feather,bird</item>
+        <item>generate,create</item>
+        <item>higher,up</item>
+        <item>ignite,fire</item>
     </string-array>
-
 </resources>

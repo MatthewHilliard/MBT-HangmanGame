@@ -1,6 +1,7 @@
 package com.example.mbt_hangmangame
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,9 +18,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var hangmanProgress: ImageView
     private lateinit var guessingWord: TextView
     private lateinit var newGameButton: Button
+    private lateinit var currList: List<String>
 
+    private var currPair: String = ""
     private var currWord: String = ""
+    private var currHint: String = ""
     private var numGuesses = 0
+    private var hintState = 1
+    private var hintText: TextView? = null
+    private var curState = ""
     private val guessedLetters = mutableSetOf<Button>()
     private val allLetters = mutableSetOf<Button>()
 
@@ -33,7 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         hangmanProgress = findViewById(R.id.hangmanPicture)
         guessingWord = findViewById(R.id.guessingWord)
-        currWord = resources.getStringArray(R.array.wordBank).random()
+        currPair = resources.getStringArray(R.array.wordBank).random()
+        currList = currPair.split(",")
+        currWord = currList[0]
+        currHint = currList[1]
+        hintState = 1
         newGameButton = findViewById(R.id.newGameButton)
 
         newGameButton.setOnClickListener(){
@@ -53,8 +64,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun newGame() {
         hangmanProgress.setImageResource(R.drawable.state0)
-        currWord = resources.getStringArray(R.array.wordBank).random()
+        currPair = resources.getStringArray(R.array.wordBank).random()
+        currList = currPair.split(",")
+        currWord = currList[0]
+        currHint = currList[1]
+        hintState = 1
         numGuesses = 0
+        if (hintText != null) {
+            hintText!!.text = "Hint:"
+        }
         newGameButton.isEnabled = true
         underscoreWord()
         resetButtons()
@@ -182,17 +200,6 @@ class MainActivity : AppCompatActivity() {
         guessingWord.text = currentText.toString()
     }
 
-    private fun vowelHint() {
-        wrongLetter()
-        val vowels = setOf('A', 'E', 'I', 'O', 'U')
-        for ((index, char) in currWord.withIndex()) {
-            if (char in vowels) {
-                updateLetter(index*2, char)
-            }
-        }
-        checkWin()
-    }
-
     private fun checkWin(){
         val trimmedWord = guessingWord.text.toString().replace(" ", "")
         if(trimmedWord.equals(currWord, ignoreCase = true)){
@@ -206,4 +213,69 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun hintClick(view: View) {
+        if (hintText == null) {
+            createHintText()
+        }
+
+        if (numGuesses == 6) {
+            val snackbar = Snackbar.make(view,
+                "Hint not available",
+                Snackbar.LENGTH_LONG)
+            snackbar.show()
+        }
+        when (hintState) {
+            1 -> {
+                hintText?.append(currHint)
+            }
+            2 -> {
+                disableHalf()
+            }
+            3 -> {
+                vowelHint()
+            }
+        }
+        hintState += 1
+    }
+
+    private fun createHintText() {
+        hintText = findViewById(R.id.hintText)
+
+    }
+
+    private fun vowelHint() {
+        wrongLetter() //costs the player a turn
+        val vowels = setOf('A', 'E', 'I', 'O', 'U')
+        for ((index, char) in currWord.withIndex()) {
+            if (char.uppercaseChar() in vowels && guessingWord.text.toString()[index*2] == '_') {
+                updateLetter(index, char.uppercaseChar())
+            }
+        }
+        checkWin()
+        hintText?.text = "vowel hint!"
+    }
+
+    private fun disableHalf() {
+        val lettersNotInWord = notInWord()
+        val lettersToDisable = randomSet(lettersNotInWord)
+
+        allLetters.forEach { button ->
+            val char = button.text.toString().uppercase().first()
+            if (char in lettersToDisable) {
+                button.isEnabled = false
+                button.setBackgroundColor(Color.parseColor("#c6cfc8"))
+            }
+        }
+    }
+
+    private fun notInWord(): Set<Char> {
+        val wordLetters = currWord.uppercase().toSet()
+        return ('A'..'Z').toSet() - wordLetters
+    }
+
+    private fun randomSet(letters: Set<Char>): Set<Char> {
+        val list = letters.toList()
+        val halfSize = list.size / 2
+        return list.shuffled().take(halfSize).toSet()
+    }
 }
