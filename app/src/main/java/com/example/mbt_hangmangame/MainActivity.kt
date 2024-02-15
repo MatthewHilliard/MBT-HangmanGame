@@ -256,6 +256,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun disableHalf() {
+        wrongLetter()
         val lettersNotInWord = notInWord()
         val lettersToDisable = randomSet(lettersNotInWord)
 
